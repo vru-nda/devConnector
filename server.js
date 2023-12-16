@@ -12,7 +12,7 @@ app.use(express.json({extended: false}));
 app.get("/", (req, res) => res.send("API running"));
 
 // define routes
-// app.use("/users", require("./routes/api/users"));
+app.use("/users", require("./routes/api/users"));
 app.use("/auth", require("./routes/api/auth"));
 app.use("/posts", require("./routes/api/posts"));
 app.use("/profile", require("./routes/api/profile"));
