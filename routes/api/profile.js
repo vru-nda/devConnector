@@ -133,7 +133,7 @@ router.post(
       // create a profile
       profile = new Profile(profileFields);
       await profile.save();
-      return res.json(profile);
+      res.json(profile);
     } catch (err) {
       console.error(err);
       res.status(500).send("Server error");
@@ -141,6 +141,64 @@ router.post(
     profileFields.social.instagram = res.send("Profile created.");
   }
 );
+
+// @route   PUT api/profile/experience
+// @desc    Add profile experience
+// @access  Private
+router.put(
+  "/experience",
+  [
+    auth,
+    [
+      check("title", "Title is required").not().isEmpty(),
+      check("company", "Company is required").not().isEmpty(),
+      check("from", "From date is required").not().isEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({errors: errors.array()});
+    }
+
+    const {title, company, location, from, to, current, description} = req.body;
+    const newExp = {title, company, location, from, to, current, description};
+
+    try {
+      const profile = await Profile.findOne({user: req.user});
+
+      profile.experience.unshift(newExp);
+      await profile.save();
+
+      res.json(profile);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Server error");
+    }
+  }
+);
+
+// @route   DELETE api/profile/experience/:expId
+// @desc    Delete experience from profile
+// @access  Private
+router.delete("/experience/:expId", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({user: req.user});
+
+    // Get the remove index
+    const removeIdx = profile.experience
+      .map((item) => item.id)
+      .indexOf(req.params.expId);
+
+    profile.experience.splice(removeIdx, 1);
+
+    await profile.save();
+    res.json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
 
 // @route   DELETE api/profile
 // @desc    Delete profile, user and post
@@ -160,4 +218,5 @@ router.delete("/", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 module.exports = router;
