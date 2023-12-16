@@ -11,7 +11,40 @@ const auth = require("../../middleware/auth");
 // @access  Private
 router.get("/me", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({user: req.user.id}).populate(
+    const profile = await Profile.findOne({user: req.user}).populate("user", [
+      "name",
+      "avatar",
+    ]);
+
+    if (!profile) {
+      return res.status(400).json({message: "No profile found for this user."});
+    }
+    res.json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/profile
+// @desc    Get all user profile
+// @access  Public
+router.get("/", async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    res.json(profiles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// @route   GET api/profile/user/:userId
+// @desc    Get profile by userid
+// @access  Public
+router.get("/user/:userId", async (req, res) => {
+  try {
+    const profile = await Profile.findOne({user: req.params.userId}).populate(
       "user",
       ["name", "avatar"]
     );
@@ -22,6 +55,9 @@ router.get("/me", auth, async (req, res) => {
     res.json(profile);
   } catch (error) {
     console.error(error);
+    if (error.kind === "ObjectId") {
+      return res.status(400).json({message: "No profile found for this user."});
+    }
     res.status(500).send("Server Error");
   }
 });
@@ -62,7 +98,7 @@ router.post(
 
     // build profile object
     const profileFields = {};
-    profileFields.user = req.user.id;
+    profileFields.user = req.user;
     if (company) profileFields.company = company;
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
@@ -81,12 +117,12 @@ router.post(
     if (instagram) profileFields.social.instagram = instagram;
 
     try {
-      let profile = await Profile.findOne({user: req.user.id});
+      let profile = await Profile.findOne({user: req.user});
 
       // update profile
       if (profile) {
         profile = await Profile.findOneAndUpdate(
-          {user: req.user.id},
+          {user: req.user},
           {$set: profileFields},
           {new: true}
         );

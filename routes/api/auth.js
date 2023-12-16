@@ -9,8 +9,8 @@ const auth = require("../../middleware/auth");
 const User = require("../../models/User");
 
 // @route   GET api/auth
-// @desc    Test Route
-// @access  Public
+// @desc    Get logged in user
+// @access  Private
 router.get("/", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user).select("-password");
