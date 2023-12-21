@@ -1,7 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link, Navigate} from "react-router-dom";
+
+import {login} from "../../redux/actions/authAction";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const {isAuthenticated} = useSelector((state) => state.auth);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,13 +16,19 @@ const Login = () => {
 
   const {email, password} = formData;
 
-  const handleChange = (e) =>
+  const handleChange = (e) => {
     setFormData({...formData, [e.target.name]: e.target.value});
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Success");
+    dispatch(login(email, password));
   };
+
+  // redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to='/dashboard' />;
+  }
 
   return (
     <>
