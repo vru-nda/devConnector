@@ -18,7 +18,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import AddExperience from "./components/profile-forms/AddExperience";
 import AddEducation from "./components/profile-forms/AddEducation";
 import Profiles from "./components/profiles/Profiles";
-import Profile from "./components/Profile/Profile";
+import Profile from "./components/profile/Profile";
 
 import "./App.css";
 import setAuthToken from "./utils/setAuthToken";

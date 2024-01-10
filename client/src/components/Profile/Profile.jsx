@@ -5,6 +5,8 @@ import {Link, useParams} from "react-router-dom";
 import {getProfileById} from "../../redux/actions/profileAction";
 
 import Spinner from "../layout/Spinner";
+import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -18,7 +20,6 @@ const Profile = () => {
   }, [dispatch, userId]);
 
   // @todo - loggedin user can only see the details
-
   return (
     <>
       {profile === null || loading ? (
@@ -33,6 +34,10 @@ const Profile = () => {
               Edit Profile
             </Link>
           )}
+          <div className='profile-grid my-1'>
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </>
       )}
     </>
