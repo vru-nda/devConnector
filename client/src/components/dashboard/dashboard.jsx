@@ -3,9 +3,11 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 
 import {getCurrentProfile} from "../../redux/actions/profileAction";
+import DashboardActions from "./DashboardActions";
 
 import Spinner from "../layout/Spinner";
-import DashboardActions from "./DashboardActions";
+import Experience from "./Experience";
+import Education from "./Education";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,8 @@ const Dashboard = () => {
       {profile !== null ? (
         <>
           <DashboardActions />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
         </>
       ) : (
         <>
