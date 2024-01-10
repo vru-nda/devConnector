@@ -11,7 +11,8 @@ import Register from "./components/auth/Register";
 import Container from "./components/layout/Container";
 import Landing from "./components/layout/Landing";
 import Navbar from "./components/layout/Navbar";
-import Dashboard from "./components/dashboard/dashboard";
+import Dashboard from "./components/dashboard/Dashboard";
+
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 import "./App.css";
