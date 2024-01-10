@@ -1,12 +1,17 @@
-import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Link} from "react-router-dom";
 
-import {createProfile} from "../../redux/actions/profileAction";
+import {
+  createProfile,
+  getCurrentProfile,
+} from "../../redux/actions/profileAction";
 
-const CreateProfile = () => {
+const EditProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const {profile, loading} = useSelector((state) => state.profile);
 
   const [formData, setFormData] = useState({
     company: "",
@@ -28,7 +33,7 @@ const CreateProfile = () => {
     company,
     location,
     status,
-    skillscompany,
+    skills,
     githubusername,
     bio,
     twitter,
@@ -38,12 +43,32 @@ const CreateProfile = () => {
     instagram,
   } = formData;
 
+  useEffect(() => {
+    dispatch(getCurrentProfile());
+
+    setFormData({
+      company: loading || !profile.company ? "" : profile.company,
+      website: loading || !profile.website ? "" : profile.website,
+      location: loading || !profile.location ? "" : profile.location,
+      status: loading || !profile.status ? "" : profile.status,
+      skills: loading || !profile.skills ? "" : profile.skills.join(","),
+      bio: loading || !profile.bio ? "" : profile.bio,
+      twitter: loading || !profile.social ? "" : profile.social.twitter,
+      facebook: loading || !profile.social ? "" : profile.social.facebook,
+      linkedin: loading || !profile.social ? "" : profile.social.linkedin,
+      youtube: loading || !profile.social ? "" : profile.social.youtube,
+      instagram: loading || !profile.social ? "" : profile.social.instagram,
+      githubusername:
+        loading || !profile.githubusername ? "" : profile.githubusername,
+    });
+  }, [dispatch, loading]);
+
   const handleChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProfile(formData, navigate));
+    dispatch(createProfile(formData, navigate, true));
   };
 
   return (
@@ -116,7 +141,7 @@ const CreateProfile = () => {
             type='text'
             placeholder='* Skills'
             name='skills'
-            value={skillscompany}
+            value={skills}
             onChange={(e) => handleChange(e)}
           />
           <small className='form-text'>
@@ -223,4 +248,4 @@ const CreateProfile = () => {
   );
 };
 
-export default CreateProfile;
+export default EditProfile;

@@ -13,6 +13,7 @@ import Landing from "./components/layout/Landing";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/profile-forms/CreateProfile";
+import EditProfile from "./components/profile-forms/EditProfile";
 import PrivateRoute from "./components/routing/PrivateRoute";
 
 import "./App.css";
@@ -40,6 +41,7 @@ const App = () => {
             <Route element={<PrivateRoute />}>
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/create-profile' element={<CreateProfile />} />
+              <Route path='/edit-profile' element={<EditProfile />} />
             </Route>
           </Route>
         </Routes>
