@@ -46,7 +46,7 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              message: "Invalid email or password",
+              msg: "Invalid email or password",
             },
           ],
         });
@@ -59,7 +59,7 @@ router.post(
         return res.status(400).json({
           errors: [
             {
-              message: "Invalid email or password",
+              msg: "Invalid email or password",
             },
           ],
         });
