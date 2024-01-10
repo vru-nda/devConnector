@@ -17,6 +17,7 @@ import EditProfile from "./components/profile-forms/EditProfile";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import AddExperience from "./components/profile-forms/AddExperience";
 import AddEducation from "./components/profile-forms/AddEducation";
+import Profiles from "./components/profiles/Profiles";
 
 import "./App.css";
 import setAuthToken from "./utils/setAuthToken";
@@ -40,6 +41,9 @@ const App = () => {
           <Route element={<Container />}>
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/profiles' element={<Profiles />} />
+
+            {/* private routes */}
             <Route element={<PrivateRoute />}>
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/create-profile' element={<CreateProfile />} />

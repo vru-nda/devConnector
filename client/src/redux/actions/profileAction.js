@@ -3,11 +3,54 @@ import {
   ACCOUNT_DELETED,
   CLEAR_PROFILE,
   GET_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
   PROFILE_ERROR,
   UPDATE_PROFILE,
 } from "./types";
 import {setAlert} from "./alertAction";
 
+// get all profiles
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({type: CLEAR_PROFILE});
+
+  try {
+    const res = await axios.get("/api/profile");
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        message: err.response.data.message,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+// get the profile by id
+export const getProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/${userId}`);
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        message: err.response.data.message,
+        status: err.response.status,
+      },
+    });
+  }
+};
+
+// get the current profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/profile/me");
@@ -26,6 +69,7 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
+// create a profile
 export const createProfile =
   (formData, navigate, edit = false) =>
   async (dispatch) => {
@@ -64,6 +108,25 @@ export const createProfile =
       });
     }
   };
+
+// get github repos
+export const getGithubRepos = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${username}`);
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        message: err.response.data.message,
+        status: err.response.status,
+      },
+    });
+  }
+};
 
 // Add Experience
 export const addExperience = (formData, navigate) => async (dispatch) => {
