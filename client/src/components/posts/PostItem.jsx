@@ -1,11 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import Moment from "react-moment";
-import {useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import {addLike, removeLike} from "../../redux/actions/postAction";
 
 const PostItem = ({
   post: {_id, avatar, name, text, user, likes, comments, date},
 }) => {
+  const dispatch = useDispatch();
   const {loading, user: authUser} = useSelector((state) => state.auth);
 
   return (
@@ -21,12 +24,20 @@ const PostItem = ({
         <p className='post-date'>
           Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
         </p>
-        <button type='button' className='btn btn-light'>
+        <button
+          type='button'
+          className='btn btn-light'
+          onClick={() => dispatch(addLike(_id))}
+        >
           <i className='fas fa-thumbs-up'></i>{" "}
           {likes?.length > 0 && <span>{likes?.length}</span>}
         </button>
 
-        <button type='button' className='btn btn-light'>
+        <button
+          type='button'
+          className='btn btn-light'
+          onClick={() => dispatch(removeLike(_id))}
+        >
           <i className='fas fa-thumbs-down'></i>
         </button>
 

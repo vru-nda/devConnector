@@ -14,7 +14,6 @@ const ProfileGithub = ({username}) => {
     dispatch(getGithubRepos(username));
   }, [dispatch, username]);
 
-  console.log("repos", repos);
   return (
     <div className='profile-github'>
       <h2 className='text-primary my-1'>
@@ -24,7 +23,7 @@ const ProfileGithub = ({username}) => {
         <Spinner />
       ) : repos.length > 0 ? (
         repos.map((repo) => (
-          <div key={repo._id} className='repo bg-white p-1 my-1'>
+          <div key={repo.id} className='repo bg-white p-1 my-1'>
             <div>
               <h4>
                 <a
