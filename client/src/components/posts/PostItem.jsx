@@ -3,8 +3,7 @@ import {Link} from "react-router-dom";
 import Moment from "react-moment";
 import {useDispatch, useSelector} from "react-redux";
 
-import {addLike, removeLike} from "../../redux/actions/postAction";
-import {deletePost} from "../../redux/actions/profileAction";
+import {addLike, deletePost, removeLike} from "../../redux/actions/postAction";
 
 const PostItem = ({
   post: {_id, avatar, name, text, user, likes, comments, date},
@@ -15,7 +14,7 @@ const PostItem = ({
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
-        <Link to='/profile'>
+        <Link to={`/profile/${user}`}>
           <img className='round-img' src={avatar} alt='' />
           <h4>{name}</h4>
         </Link>

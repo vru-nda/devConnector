@@ -44,7 +44,7 @@ router.post(
 // @access  Private
 router.get("/", auth, async (req, res) => {
   try {
-    const posts = await Post.find().sort({data: -1}); // -1 is recent first
+    const posts = await Post.find().sort({date: -1}); // -1 is recent first
     res.json(posts);
   } catch (error) {
     console.error(err.message);
