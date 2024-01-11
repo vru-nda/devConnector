@@ -24,7 +24,7 @@ export const getAllProfiles = () => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -43,7 +43,7 @@ export const getProfileById = (userId) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -62,7 +62,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -102,7 +102,7 @@ export const createProfile =
       dispatch({
         type: PROFILE_ERROR,
         payload: {
-          message: err.response.data.message,
+          message: err.response.data.msg,
           status: err.response.status,
         },
       });
@@ -121,7 +121,7 @@ export const getGithubRepos = (username) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -155,7 +155,7 @@ export const addExperience = (formData, navigate) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -189,7 +189,7 @@ export const addEducation = (formData, navigate) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -210,7 +210,7 @@ export const deleteExperience = (id) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
@@ -231,7 +231,7 @@ export const deleteEducation = (id) => async (dispatch) => {
     dispatch({
       type: PROFILE_ERROR,
       payload: {
-        message: err.response.data.message,
+        message: err.response.data.msg,
         status: err.response.status,
       },
     });
