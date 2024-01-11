@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   ACCOUNT_DELETED,
   CLEAR_PROFILE,
+  DELETE_POST,
   GET_PROFILE,
   GET_PROFILES,
   GET_REPOS,
@@ -254,5 +255,26 @@ export const deleteAccount = () => async (dispatch) => {
         payload: {msg: err.response.statusText, status: err.response.status},
       });
     }
+  }
+};
+
+// Delete Post
+export const deletePost = (postId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/posts/${postId}`);
+    dispatch({
+      type: DELETE_POST,
+      payload: postId,
+    });
+
+    dispatch(setAlert("Post Deleted!", "danger"));
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: {
+        message: err.response.data.msg,
+        status: err.response.status,
+      },
+    });
   }
 };
