@@ -61,6 +61,7 @@ const EditProfile = () => {
       githubusername:
         loading || !profile.githubusername ? "" : profile.githubusername,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, loading]);
 
   const handleChange = (e) =>
