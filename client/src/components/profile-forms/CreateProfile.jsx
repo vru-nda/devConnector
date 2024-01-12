@@ -27,6 +27,7 @@ const CreateProfile = () => {
   const {
     company,
     location,
+    website,
     status,
     skillscompany,
     githubusername,
@@ -92,7 +93,7 @@ const CreateProfile = () => {
             type='text'
             placeholder='Website'
             name='website'
-            value={company}
+            value={website}
             onChange={(e) => handleChange(e)}
           />
           <small className='form-text'>
